@@ -1,0 +1,9 @@
+message QueryNode{
+	required int32 id=1;
+	required int32 type=2;
+	repeated int32 neighbor=3;
+}
+
+message QueryGraph{
+	repeated QueryNode nodes=1;
+}

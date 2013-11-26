@@ -1,0 +1,31 @@
+message QueryNode{
+	required int32 id=1;
+	required int32 type=2;
+	repeated int32 neighbor=3;
+}
+
+message QueryGraph{
+	repeated QueryNode nodes=1;
+}
+
+message MatchingPair {
+    required int32 qid=1;
+    required int32 match=2;
+    required string name=3;
+}
+
+
+
+message EdgeScore{
+    required int32 src=1;
+    required int32 dest=2;
+    required int32 path_num=3;
+    required int32 path_len=4;
+    required double score=5;
+}
+message AnswerCoding {
+  repeated MatchingPair pairs=1;
+  required double score=2;
+  repeated EdgeScore edges=4;
+  required double maxscore=5;
+}

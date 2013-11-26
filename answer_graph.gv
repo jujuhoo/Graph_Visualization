@@ -1,0 +1,33 @@
+graph{
+edge[fontsize="10px"];
+483642171--d0[penwidth=2.4422799422799426,label=" hop:2\l num:36\l score:0.25327347549569773"];
+d0--231440670[penwidth=2.4422799422799426];
+483642171--821752614[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+483642171--38855274[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+483642171--738187676[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+483642171--556045767[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+231440670--821752614[penwidth=4.8232323232323235,label=" hop:1\l num:2\l score:0.5001870557426114"];
+231440670--38855274[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+231440670--556045767[penwidth=4.8232323232323235,label=" hop:1\l num:2\l score:0.5001870557426114"];
+231440670--1018262481[penwidth=4.825036075036076,label=" hop:1\l num:3\l score:0.5003741114852226"];
+821752614--38855274[penwidth=4.8232323232323235,label=" hop:1\l num:2\l score:0.5001870557426114"];
+38855274--d1[penwidth=2.447691197691198,label=" hop:2\l num:42\l score:0.2538346427235316"];
+d1--738187676[penwidth=2.447691197691198];
+738187676--d2[penwidth=2.4107142857142856,label=" hop:2\l num:1\l score:0.25"];
+d2--560221701[penwidth=2.4107142857142856];
+556045767--d3[penwidth=2.4404761904761907,label=" hop:2\l num:34\l score:0.25308641975308643"];
+d3--1018262481[penwidth=2.4404761904761907];
+1018262481--560221701[penwidth=4.821428571428571,label=" hop:1\l num:1\l score:0.5"];
+483642171[label="error",fillcolor="/paired12/8",style="filled"]
+231440670[label="error",fillcolor="/paired12/2",style="filled"]
+821752614[label="error",fillcolor="/paired12/4",style="filled"]
+38855274[label="error",fillcolor="/paired12/5",style="filled"]
+738187676[label="error",fillcolor="/paired12/7",style="filled"]
+556045767[label="error",fillcolor="/paired12/3",style="filled"]
+1018262481[label="error",fillcolor="/paired12/1",style="filled"]
+560221701[label="error",fillcolor="/paired12/6",style="filled"]
+d0[label="",width=.25, height=.25, fixedsize=true]
+d1[label="",width=.25, height=.25, fixedsize=true]
+d2[label="",width=.25, height=.25, fixedsize=true]
+d3[label="",width=.25, height=.25, fixedsize=true]
+}
