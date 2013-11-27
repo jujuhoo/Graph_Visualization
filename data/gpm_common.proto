@@ -29,3 +29,7 @@ message AnswerCoding {
   repeated EdgeScore edges=4;
   required double maxscore=5;
 }
+message AnswerCodingArray {
+  repeated AnswerCoding answers=1;
+}
+

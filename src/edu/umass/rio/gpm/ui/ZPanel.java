@@ -120,8 +120,9 @@ private static final long serialVersionUID = 1L;
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-
-       image_output = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+        if(image != null){
+         image_output = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+        }
         
     }//GEN-LAST:event_formComponentResized
 

@@ -3188,6 +3188,569 @@ public final class GpmCommon {
     // @@protoc_insertion_point(class_scope:AnswerCoding)
   }
   
+  public interface AnswerCodingArrayOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .AnswerCoding answers = 1;
+    java.util.List<GpmCommon.AnswerCoding> 
+        getAnswersList();
+    GpmCommon.AnswerCoding getAnswers(int index);
+    int getAnswersCount();
+    java.util.List<? extends GpmCommon.AnswerCodingOrBuilder> 
+        getAnswersOrBuilderList();
+    GpmCommon.AnswerCodingOrBuilder getAnswersOrBuilder(
+        int index);
+  }
+  public static final class AnswerCodingArray extends
+      com.google.protobuf.GeneratedMessage
+      implements AnswerCodingArrayOrBuilder {
+    // Use AnswerCodingArray.newBuilder() to construct.
+    private AnswerCodingArray(Builder builder) {
+      super(builder);
+    }
+    private AnswerCodingArray(boolean noInit) {}
+    
+    private static final AnswerCodingArray defaultInstance;
+    public static AnswerCodingArray getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public AnswerCodingArray getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return GpmCommon.internal_static_AnswerCodingArray_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return GpmCommon.internal_static_AnswerCodingArray_fieldAccessorTable;
+    }
+    
+    // repeated .AnswerCoding answers = 1;
+    public static final int ANSWERS_FIELD_NUMBER = 1;
+    private java.util.List<GpmCommon.AnswerCoding> answers_;
+    public java.util.List<GpmCommon.AnswerCoding> getAnswersList() {
+      return answers_;
+    }
+    public java.util.List<? extends GpmCommon.AnswerCodingOrBuilder> 
+        getAnswersOrBuilderList() {
+      return answers_;
+    }
+    public int getAnswersCount() {
+      return answers_.size();
+    }
+    public GpmCommon.AnswerCoding getAnswers(int index) {
+      return answers_.get(index);
+    }
+    public GpmCommon.AnswerCodingOrBuilder getAnswersOrBuilder(
+        int index) {
+      return answers_.get(index);
+    }
+    
+    private void initFields() {
+      answers_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getAnswersCount(); i++) {
+        if (!getAnswers(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int i = 0; i < answers_.size(); i++) {
+        output.writeMessage(1, answers_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (int i = 0; i < answers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, answers_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static GpmCommon.AnswerCodingArray parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static GpmCommon.AnswerCodingArray parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(GpmCommon.AnswerCodingArray prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements GpmCommon.AnswerCodingArrayOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return GpmCommon.internal_static_AnswerCodingArray_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return GpmCommon.internal_static_AnswerCodingArray_fieldAccessorTable;
+      }
+      
+      // Construct using GpmCommon.AnswerCodingArray.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getAnswersFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        if (answersBuilder_ == null) {
+          answers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          answersBuilder_.clear();
+        }
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return GpmCommon.AnswerCodingArray.getDescriptor();
+      }
+      
+      public GpmCommon.AnswerCodingArray getDefaultInstanceForType() {
+        return GpmCommon.AnswerCodingArray.getDefaultInstance();
+      }
+      
+      public GpmCommon.AnswerCodingArray build() {
+        GpmCommon.AnswerCodingArray result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private GpmCommon.AnswerCodingArray buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        GpmCommon.AnswerCodingArray result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public GpmCommon.AnswerCodingArray buildPartial() {
+        GpmCommon.AnswerCodingArray result = new GpmCommon.AnswerCodingArray(this);
+        int from_bitField0_ = bitField0_;
+        if (answersBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            answers_ = java.util.Collections.unmodifiableList(answers_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.answers_ = answers_;
+        } else {
+          result.answers_ = answersBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof GpmCommon.AnswerCodingArray) {
+          return mergeFrom((GpmCommon.AnswerCodingArray)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(GpmCommon.AnswerCodingArray other) {
+        if (other == GpmCommon.AnswerCodingArray.getDefaultInstance()) return this;
+        if (answersBuilder_ == null) {
+          if (!other.answers_.isEmpty()) {
+            if (answers_.isEmpty()) {
+              answers_ = other.answers_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureAnswersIsMutable();
+              answers_.addAll(other.answers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.answers_.isEmpty()) {
+            if (answersBuilder_.isEmpty()) {
+              answersBuilder_.dispose();
+              answersBuilder_ = null;
+              answers_ = other.answers_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              answersBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getAnswersFieldBuilder() : null;
+            } else {
+              answersBuilder_.addAllMessages(other.answers_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getAnswersCount(); i++) {
+          if (!getAnswers(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              GpmCommon.AnswerCoding.Builder subBuilder = GpmCommon.AnswerCoding.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addAnswers(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // repeated .AnswerCoding answers = 1;
+      private java.util.List<GpmCommon.AnswerCoding> answers_ =
+        java.util.Collections.emptyList();
+      private void ensureAnswersIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          answers_ = new java.util.ArrayList<GpmCommon.AnswerCoding>(answers_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          GpmCommon.AnswerCoding, GpmCommon.AnswerCoding.Builder, GpmCommon.AnswerCodingOrBuilder> answersBuilder_;
+      
+      public java.util.List<GpmCommon.AnswerCoding> getAnswersList() {
+        if (answersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(answers_);
+        } else {
+          return answersBuilder_.getMessageList();
+        }
+      }
+      public int getAnswersCount() {
+        if (answersBuilder_ == null) {
+          return answers_.size();
+        } else {
+          return answersBuilder_.getCount();
+        }
+      }
+      public GpmCommon.AnswerCoding getAnswers(int index) {
+        if (answersBuilder_ == null) {
+          return answers_.get(index);
+        } else {
+          return answersBuilder_.getMessage(index);
+        }
+      }
+      public Builder setAnswers(
+          int index, GpmCommon.AnswerCoding value) {
+        if (answersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAnswersIsMutable();
+          answers_.set(index, value);
+          onChanged();
+        } else {
+          answersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setAnswers(
+          int index, GpmCommon.AnswerCoding.Builder builderForValue) {
+        if (answersBuilder_ == null) {
+          ensureAnswersIsMutable();
+          answers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          answersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAnswers(GpmCommon.AnswerCoding value) {
+        if (answersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAnswersIsMutable();
+          answers_.add(value);
+          onChanged();
+        } else {
+          answersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addAnswers(
+          int index, GpmCommon.AnswerCoding value) {
+        if (answersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAnswersIsMutable();
+          answers_.add(index, value);
+          onChanged();
+        } else {
+          answersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addAnswers(
+          GpmCommon.AnswerCoding.Builder builderForValue) {
+        if (answersBuilder_ == null) {
+          ensureAnswersIsMutable();
+          answers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          answersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAnswers(
+          int index, GpmCommon.AnswerCoding.Builder builderForValue) {
+        if (answersBuilder_ == null) {
+          ensureAnswersIsMutable();
+          answers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          answersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllAnswers(
+          java.lang.Iterable<? extends GpmCommon.AnswerCoding> values) {
+        if (answersBuilder_ == null) {
+          ensureAnswersIsMutable();
+          super.addAll(values, answers_);
+          onChanged();
+        } else {
+          answersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearAnswers() {
+        if (answersBuilder_ == null) {
+          answers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          answersBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removeAnswers(int index) {
+        if (answersBuilder_ == null) {
+          ensureAnswersIsMutable();
+          answers_.remove(index);
+          onChanged();
+        } else {
+          answersBuilder_.remove(index);
+        }
+        return this;
+      }
+      public GpmCommon.AnswerCoding.Builder getAnswersBuilder(
+          int index) {
+        return getAnswersFieldBuilder().getBuilder(index);
+      }
+      public GpmCommon.AnswerCodingOrBuilder getAnswersOrBuilder(
+          int index) {
+        if (answersBuilder_ == null) {
+          return answers_.get(index);  } else {
+          return answersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends GpmCommon.AnswerCodingOrBuilder> 
+           getAnswersOrBuilderList() {
+        if (answersBuilder_ != null) {
+          return answersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(answers_);
+        }
+      }
+      public GpmCommon.AnswerCoding.Builder addAnswersBuilder() {
+        return getAnswersFieldBuilder().addBuilder(
+            GpmCommon.AnswerCoding.getDefaultInstance());
+      }
+      public GpmCommon.AnswerCoding.Builder addAnswersBuilder(
+          int index) {
+        return getAnswersFieldBuilder().addBuilder(
+            index, GpmCommon.AnswerCoding.getDefaultInstance());
+      }
+      public java.util.List<GpmCommon.AnswerCoding.Builder> 
+           getAnswersBuilderList() {
+        return getAnswersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          GpmCommon.AnswerCoding, GpmCommon.AnswerCoding.Builder, GpmCommon.AnswerCodingOrBuilder> 
+          getAnswersFieldBuilder() {
+        if (answersBuilder_ == null) {
+          answersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              GpmCommon.AnswerCoding, GpmCommon.AnswerCoding.Builder, GpmCommon.AnswerCodingOrBuilder>(
+                  answers_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          answers_ = null;
+        }
+        return answersBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:AnswerCodingArray)
+    }
+    
+    static {
+      defaultInstance = new AnswerCodingArray(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:AnswerCodingArray)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_QueryNode_descriptor;
   private static
@@ -3213,6 +3776,11 @@ public final class GpmCommon {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AnswerCoding_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_AnswerCodingArray_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_AnswerCodingArray_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3231,7 +3799,8 @@ public final class GpmCommon {
       "_len\030\004 \002(\005\022\r\n\005score\030\005 \002(\001\"h\n\014AnswerCodin" +
       "g\022\034\n\005pairs\030\001 \003(\0132\r.MatchingPair\022\r\n\005score" +
       "\030\002 \002(\001\022\031\n\005edges\030\004 \003(\0132\n.EdgeScore\022\020\n\010max" +
-      "score\030\005 \002(\001"
+      "score\030\005 \002(\001\"3\n\021AnswerCodingArray\022\036\n\007answ",
+      "ers\030\001 \003(\0132\r.AnswerCoding"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -3278,6 +3847,14 @@ public final class GpmCommon {
               new java.lang.String[] { "Pairs", "Score", "Edges", "Maxscore", },
               GpmCommon.AnswerCoding.class,
               GpmCommon.AnswerCoding.Builder.class);
+          internal_static_AnswerCodingArray_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_AnswerCodingArray_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_AnswerCodingArray_descriptor,
+              new java.lang.String[] { "Answers", },
+              GpmCommon.AnswerCodingArray.class,
+              GpmCommon.AnswerCodingArray.Builder.class);
           return null;
         }
       };

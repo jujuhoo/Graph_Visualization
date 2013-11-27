@@ -5,12 +5,15 @@
 package edu.umass.rio.gpm.ui;
 
 import com.google.protobuf.TextFormat;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
 import edu.umass.rio.gpm.control.GPMControler;
 import edu.umass.rio.gpm.control.QueryGraphReader;
 import edu.umass.rio.gpm.data.AnswerComparator;
 import edu.umass.rio.gpm.data.Graph;
 import edu.umass.rio.gpm.data.GraphNode;
 import edu.umass.rio.gpm.data.proto.GpmCommon.AnswerCoding;
+import edu.umass.rio.gpm.data.proto.GpmCommon.AnswerCodingArray;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -20,9 +23,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -113,11 +119,12 @@ public class GPM_DemoView extends FrameView {
         topKTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         matchingTable = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        infoTextPane = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        logTextArea = new javax.swing.JTextArea();
+        jButton7 = new javax.swing.JButton();
         jSplitPane2 = new javax.swing.JSplitPane();
         queryGraphPanel = new edu.umass.rio.gpm.ui.ZPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -128,8 +135,12 @@ public class GPM_DemoView extends FrameView {
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        logTextField = new javax.swing.JTextField();
+        scriptTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        indexTextField = new javax.swing.JTextField();
+        indexLabel = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        indexStateLabel = new javax.swing.JLabel();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -140,6 +151,7 @@ public class GPM_DemoView extends FrameView {
         jPanel1 = new javax.swing.JPanel();
 
         mainPanel.setName("mainPanel"); // NOI18N
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.LINE_AXIS));
 
         jSplitPane1.setDividerLocation(300);
         jSplitPane1.setName("jSplitPane1"); // NOI18N
@@ -222,13 +234,13 @@ public class GPM_DemoView extends FrameView {
         matchingTable.getColumnModel().getColumn(1).setResizable(false);
         matchingTable.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("matchingTable.columnModel.title1")); // NOI18N
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        infoTextPane.setName("infoTextPane"); // NOI18N
-        jScrollPane3.setViewportView(infoTextPane);
-
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
@@ -244,6 +256,21 @@ public class GPM_DemoView extends FrameView {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        logTextArea.setColumns(20);
+        logTextArea.setRows(5);
+        logTextArea.setName("logTextArea"); // NOI18N
+        jScrollPane3.setViewportView(logTextArea);
+
+        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setName("jButton7"); // NOI18N
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -251,16 +278,17 @@ public class GPM_DemoView extends FrameView {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton7))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(105, 105, 105))
                     .addComponent(jLabel1))
                 .addContainerGap())
         );
@@ -274,11 +302,12 @@ public class GPM_DemoView extends FrameView {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -341,40 +370,58 @@ public class GPM_DemoView extends FrameView {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        logTextField.setText(resourceMap.getString("logTextField.text")); // NOI18N
-        logTextField.setName("logTextField"); // NOI18N
+        scriptTextField.setText(resourceMap.getString("scriptTextField.text")); // NOI18N
+        scriptTextField.setName("scriptTextField"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
+
+        indexTextField.setName("indexTextField"); // NOI18N
+
+        indexLabel.setText(resourceMap.getString("indexLabel.text")); // NOI18N
+        indexLabel.setName("indexLabel"); // NOI18N
+
+        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setName("jButton6"); // NOI18N
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
+
+        indexStateLabel.setText(resourceMap.getString("indexStateLabel.text")); // NOI18N
+        indexStateLabel.setName("indexStateLabel"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(queryGraphTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                        .addGap(13, 13, 13)
+                        .addComponent(jButton3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(answerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(queryGraphTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                                .addGap(13, 13, 13)
-                                .addComponent(jButton3))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(answerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(logTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5))
-                            .addComponent(jLabel3)))
+                        .addComponent(scriptTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
+                        .addComponent(indexLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(indexStateLabel))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
+                        .addComponent(indexTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -396,30 +443,24 @@ public class GPM_DemoView extends FrameView {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scriptTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(indexLabel)
+                    .addComponent(indexStateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(indexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);
 
         jSplitPane1.setLeftComponent(jSplitPane2);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
+        mainPanel.add(jSplitPane1);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -516,7 +557,66 @@ public class GPM_DemoView extends FrameView {
         queryGraphPanel.setImagePath(path);
         queryGraphPanel.repaint();
     }//GEN-LAST:event_jButton3MouseClicked
+    private String readFile( File file) throws IOException {
 
+        StringBuilder fileContents = new StringBuilder((int) file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while (scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
+    }
+    
+    private void loadLog(File file){
+        if(!file.exists())
+            return;
+        try{
+            logTextArea.setText(readFile(file));
+            logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    private void loadAnswers(File folder){
+        if(!folder.exists() && !folder.isDirectory())
+            return;
+
+        for(File f: folder.listFiles()){
+            if(f.getName().contains("answer-")){
+                if(f.getName().equals(this.answerPath)){
+                    continue;
+                }else{
+                    this.answerPath=f.getName();
+                }
+                try{
+                    ((DefaultTableModel)topKTable.getModel()).setRowCount(0);
+                    answers.clear();
+                    InputStreamReader reader = new InputStreamReader(new FileInputStream(f), "ASCII");
+                    AnswerCodingArray.Builder builder = AnswerCodingArray.newBuilder();
+                    TextFormat.merge(reader, builder);
+                    AnswerCodingArray answer_array = builder.build();
+                    for(int i=0; i<answer_array.getAnswersCount(); i++){
+                        answers.add(answer_array.getAnswers(i));
+                    }
+                }catch(Exception e){
+                    System.out.println(e.toString());
+                }                
+            }
+        }
+        
+        Collections.sort(answers, new AnswerComparator());
+       ((DefaultTableModel)topKTable.getModel()).setRowCount(answers.size());
+       for(int i=0; i<answers.size(); i++){
+           this.topKTable.setValueAt(i+1, i, 0);
+           this.topKTable.setValueAt(answers.get(i).getScore(), i, 1);
+       }
+    }
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
         if (fileChooser == null) {
@@ -526,30 +626,17 @@ public class GPM_DemoView extends FrameView {
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.showOpenDialog(this.jButton4);
         answerTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
-        answers.clear();
+        
         for(File f: fileChooser.getSelectedFile().listFiles()){
             if(f.getName().contains("answer-")){
-                try{
-                    InputStreamReader reader = new InputStreamReader(new FileInputStream(f), "ASCII");
-                    AnswerCoding.Builder builder = AnswerCoding.newBuilder();
-                    TextFormat.merge(reader, builder);
-                    AnswerCoding answer = builder.build();  
-                    answers.add(answer);
-                }catch(Exception e){
-                    System.out.println(e.toString());
-                }                
+                f.delete();
             }
         }
+        //loadAnswers(fileChooser.getSelectedFile());
         
-        Collections.sort(answers, new AnswerComparator());
-        
-       for(int i=0; i<answers.size(); i++){
-           this.topKTable.setValueAt(i+1, i, 0);
-           this.topKTable.setValueAt(answers.get(i).getScore(), i, 1);
-       }
         
     }//GEN-LAST:event_jButton4MouseClicked
-
+    
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         // TODO add your handling code here:
                 if (fileChooser == null) {
@@ -558,9 +645,9 @@ public class GPM_DemoView extends FrameView {
         }
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.showOpenDialog(this.jButton5);
-        logTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+        scriptTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_jButton5MouseClicked
-
+    
     private void topKTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topKTableMouseClicked
         // TODO add your handling code here:
         int i = topKTable.getSelectedRow();
@@ -573,23 +660,89 @@ public class GPM_DemoView extends FrameView {
                 String queryNodeName="";
                 for(GraphNode gn:query.getGraphData()){
                     if(answer.getPairs(j).getQid() == gn.getId()){
+                        
                         queryNodeName = gn.getName();
                     }
                 }
+                String match_name = "";
+                if(GPMControler.ID_NAME_MAP.get(answer.getPairs(j).getMatch()) == null){
+                    match_name = new Integer(answer.getPairs(j).getMatch()).toString();
+                }else{
+                    match_name = GPMControler.ID_NAME_MAP.get(answer.getPairs(j).getMatch());
+                }
                 matchingTable.setValueAt(queryNodeName, j, 0);
-                matchingTable.setValueAt(answer.getPairs(j).getMatch(), j, 1);
+                matchingTable.setValueAt(match_name, j, 1);
             }
         }
     }//GEN-LAST:event_topKTableMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+       File script_file = new File(scriptTextField.getText());
+       File query_file = new File(queryGraphTextField.getText());
+       final File log_file = new File(scriptTextField.getText()+".log");
+       if(!script_file.exists() || !query_file.exists()){
+           return;
+       }
+//       try{
+//        timer.cancel();
+//       }catch(Exception e){
+//       }
+       if(timer_task!=null){
+           timer_task.cancel();
+       }
+       timer_task =  new java.util.TimerTask() { public void run() { loadAnswers(new File(answerTextField.getText())); loadLog(log_file); } };
+        timer.schedule(timer_task, 0, 1*1000);
+
+          try {
+            String command = "sh "+script_file.getName()+" "+query_file.getName();             
+           // String command = "sh ping.sh";
+            System.out.println(command);
+            Process proc = Runtime.getRuntime().exec(command);
+//            InputStreamReader ir = new InputStreamReader(proc.getInputStream());
+//            LineNumberReader lnr = new LineNumberReader(ir);
+//            String line;
+//            while ((line = lnr.readLine()) != null) {
+//                logTextArea.append(line+"\r\n");
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        // TODO add your handling code here:
+        if (fileChooser == null) {
+            //JFrame mainFrame = GPM_DemoApp.getApplication().getMainFrame();
+            fileChooser = new JFileChooser();
+        }
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.showOpenDialog(this.jButton5);
+        indexTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+        indexStateLabel.setText("Loading Index");
+        GPMControler.loadIndex(fileChooser.getSelectedFile().getAbsolutePath());
+        indexStateLabel.setText("Finished Loading");
+    }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        // TODO add your handling code here:
+        if(timer_task!=null){
+           timer_task.cancel();
+       }
+    }//GEN-LAST:event_jButton7MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField answerTextField;
-    private javax.swing.JTextPane infoTextPane;
+    private javax.swing.JLabel indexLabel;
+    private javax.swing.JLabel indexStateLabel;
+    private javax.swing.JTextField indexTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -605,11 +758,12 @@ public class GPM_DemoView extends FrameView {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JTextField logTextField;
+    private javax.swing.JTextArea logTextArea;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTable matchingTable;
     private edu.umass.rio.gpm.ui.ZPanel queryGraphPanel;
     private javax.swing.JTextField queryGraphTextField;
+    private javax.swing.JTextField scriptTextField;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
@@ -623,11 +777,13 @@ public class GPM_DemoView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
-    private JFileChooser fileChooser;
+    private JFileChooser fileChooser=new JFileChooser(new File(System.getProperty("user.dir")));
     
     private String queryGraphPath = ""; 
     private String answerPath = ""; 
     private String logPath = ""; 
     private ArrayList<AnswerCoding> answers = new ArrayList<AnswerCoding>();
     private Graph query=null;
+    private java.util.Timer timer = new java.util.Timer(true); 
+    private java.util.TimerTask timer_task = null;
 }

@@ -32,14 +32,11 @@ public class AnswerFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
         answerPanel = new edu.umass.rio.gpm.ui.ZPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         answerPanel.setAutoscrolls(true);
         answerPanel.setName("answerPanel"); // NOI18N
@@ -48,16 +45,14 @@ public class AnswerFrame extends javax.swing.JFrame {
         answerPanel.setLayout(answerPanelLayout);
         answerPanelLayout.setHorizontalGroup(
             answerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         answerPanelLayout.setVerticalGroup(
             answerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        jScrollPane1.setViewportView(answerPanel);
-
-        getContentPane().add(jScrollPane1);
+        getContentPane().add(answerPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -68,6 +63,5 @@ public class AnswerFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private edu.umass.rio.gpm.ui.ZPanel answerPanel;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
