@@ -1,0 +1,590 @@
+answers {
+  pairs {
+    qid: -3
+    match: 864250653
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 1042717467
+  }
+  pairs {
+    qid: -1
+    match: 752337522
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 0.9337999755800922
+  edges {
+    src: 864250653
+    dest: 1042717467
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 752337522
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 1042717467
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 752337522
+    path_num: 3
+    path_len: 2
+    score: 0.34948812803453577
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 864250653
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 752337522
+  }
+  pairs {
+    qid: -1
+    match: 1042717467
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 0.9337999755800922
+  edges {
+    src: 864250653
+    dest: 752337522
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 1042717467
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 752337522
+    path_num: 3
+    path_len: 2
+    score: 0.34948812803453577
+  }
+  edges {
+    src: 710113230
+    dest: 1042717467
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 389113278
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 797253423
+  }
+  pairs {
+    qid: -1
+    match: 221369669
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.0280468100369509
+  edges {
+    src: 389113278
+    dest: 797253423
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 221369669
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 797253423
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 221369669
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 389113278
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 221369669
+  }
+  pairs {
+    qid: -1
+    match: 797253423
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.0280468100369509
+  edges {
+    src: 389113278
+    dest: 221369669
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 797253423
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 221369669
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 797253423
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 91474517
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 613366456
+  }
+  pairs {
+    qid: -1
+    match: 613366456
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.4024041282975055
+  edges {
+    src: 91474517
+    dest: 613366456
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 91474517
+    dest: 613366456
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 91474517
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 613366456
+    path_num: 4
+    path_len: 2
+    score: 0.375
+  }
+  edges {
+    src: 710113230
+    dest: 613366456
+    path_num: 4
+    path_len: 2
+    score: 0.375
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 91474517
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 613366456
+  }
+  pairs {
+    qid: -1
+    match: 1039198546
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.4028325827904691
+  edges {
+    src: 91474517
+    dest: 613366456
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 91474517
+    dest: 1039198546
+    path_num: 1
+    path_len: 2
+    score: 0.25
+  }
+  edges {
+    src: 91474517
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 613366456
+    path_num: 4
+    path_len: 2
+    score: 0.375
+  }
+  edges {
+    src: 710113230
+    dest: 1039198546
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 91474517
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 1039198546
+  }
+  pairs {
+    qid: -1
+    match: 613366456
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.4028325827904691
+  edges {
+    src: 91474517
+    dest: 1039198546
+    path_num: 1
+    path_len: 2
+    score: 0.25
+  }
+  edges {
+    src: 91474517
+    dest: 613366456
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 91474517
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 1039198546
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 613366456
+    path_num: 4
+    path_len: 2
+    score: 0.375
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 864250653
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 752337522
+  }
+  pairs {
+    qid: -1
+    match: 752337522
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.484395265018057
+  edges {
+    src: 864250653
+    dest: 752337522
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 752337522
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 752337522
+    path_num: 3
+    path_len: 2
+    score: 0.34948812803453577
+  }
+  edges {
+    src: 710113230
+    dest: 752337522
+    path_num: 3
+    path_len: 2
+    score: 0.34948812803453577
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 864250653
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 1042717467
+  }
+  pairs {
+    qid: -1
+    match: 1042717467
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.6327762316491639
+  edges {
+    src: 864250653
+    dest: 1042717467
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 1042717467
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 864250653
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 1042717467
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 1042717467
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
+answers {
+  pairs {
+    qid: -3
+    match: 389113278
+  }
+  pairs {
+    qid: 710113230
+    match: 710113230
+  }
+  pairs {
+    qid: -2
+    match: 221369669
+  }
+  pairs {
+    qid: -1
+    match: 221369669
+  }
+  pairs {
+    qid: 845777266
+    match: 845777266
+  }
+  score: 1.6528325827904691
+  edges {
+    src: 389113278
+    dest: 221369669
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 221369669
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 389113278
+    dest: 845777266
+    path_num: 1
+    path_len: 1
+    score: 0.5
+  }
+  edges {
+    src: 710113230
+    dest: 221369669
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  edges {
+    src: 710113230
+    dest: 221369669
+    path_num: 2
+    path_len: 2
+    score: 0.3123928863767591
+  }
+  maxscore: 1
+}
