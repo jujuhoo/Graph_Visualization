@@ -7,6 +7,7 @@ package edu.umass.rio.gpm.ui;
 import com.google.protobuf.TextFormat;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
+import edu.umass.rio.freebase.FreebaseConverter;
 import edu.umass.rio.gpm.control.GPMControler;
 import edu.umass.rio.gpm.control.QueryGraphReader;
 import edu.umass.rio.gpm.data.AnswerComparator;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 import javax.swing.Timer;
 import javax.swing.Icon;
@@ -125,6 +127,7 @@ public class GPM_DemoView extends FrameView {
         jScrollPane3 = new javax.swing.JScrollPane();
         logTextArea = new javax.swing.JTextArea();
         jButton7 = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jSplitPane2 = new javax.swing.JSplitPane();
         queryGraphPanel = new edu.umass.rio.gpm.ui.ZPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -141,6 +144,7 @@ public class GPM_DemoView extends FrameView {
         indexLabel = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         indexStateLabel = new javax.swing.JLabel();
+        jFilmCheckBox = new javax.swing.JCheckBox();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -271,6 +275,9 @@ public class GPM_DemoView extends FrameView {
             }
         });
 
+        jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
+        jCheckBox1.setName("jCheckBox1"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -278,13 +285,15 @@ public class GPM_DemoView extends FrameView {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7))
+                        .addComponent(jButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,7 +312,8 @@ public class GPM_DemoView extends FrameView {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)
-                    .addComponent(jButton7))
+                    .addComponent(jButton7)
+                    .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -392,6 +402,9 @@ public class GPM_DemoView extends FrameView {
         indexStateLabel.setText(resourceMap.getString("indexStateLabel.text")); // NOI18N
         indexStateLabel.setName("indexStateLabel"); // NOI18N
 
+        jFilmCheckBox.setText(resourceMap.getString("jFilmCheckBox.text")); // NOI18N
+        jFilmCheckBox.setName("jFilmCheckBox"); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -399,6 +412,7 @@ public class GPM_DemoView extends FrameView {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFilmCheckBox)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(queryGraphTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                         .addGap(13, 13, 13)
@@ -453,7 +467,9 @@ public class GPM_DemoView extends FrameView {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(indexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jFilmCheckBox)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);
@@ -532,7 +548,7 @@ public class GPM_DemoView extends FrameView {
         try{
         AnswerCoding answer = answers.get(topKTable.getSelectedRow());    
         AnswerFrame frame = new AnswerFrame();
-        frame.setImage(GPMControler.getAnswerGraphDot(answer));
+        frame.setImage(GPMControler.getAnswerGraphDot(answer,this.query));
         frame.setAlwaysOnTop(true);
         GPM_DemoApp.getApplication().show(frame);
         }catch(Exception e){
@@ -584,16 +600,16 @@ public class GPM_DemoView extends FrameView {
         }
     }
     private void loadAnswers(File folder){
-        if(!folder.exists() && !folder.isDirectory())
-            return;
-
-        for(File f: folder.listFiles()){
-            if(f.getName().contains("answer-")){
-                if(f.getName().equals(this.answerPath)){
-                    continue;
-                }else{
+//        if(!folder.exists() && !folder.isDirectory())
+//            return;
+        File f= folder;
+        //for(File f: folder.listFiles()){
+            if(f.getName().contains("answer")){
+//                if(f.getName().equals(this.answerPath)){
+//                    continue;
+//                }else{
                     this.answerPath=f.getName();
-                }
+//                }
                 try{
                     ((DefaultTableModel)topKTable.getModel()).setRowCount(0);
                     answers.clear();
@@ -608,7 +624,7 @@ public class GPM_DemoView extends FrameView {
                     System.out.println(e.toString());
                 }                
             }
-        }
+        //}
         
         Collections.sort(answers, new AnswerComparator());
        ((DefaultTableModel)topKTable.getModel()).setRowCount(answers.size());
@@ -623,16 +639,16 @@ public class GPM_DemoView extends FrameView {
             //JFrame mainFrame = GPM_DemoApp.getApplication().getMainFrame();
             fileChooser = new JFileChooser();
         }
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+       // fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.showOpenDialog(this.jButton4);
         answerTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         
-        for(File f: fileChooser.getSelectedFile().listFiles()){
-            if(f.getName().contains("answer-")){
-                f.delete();
-            }
-        }
-        //loadAnswers(fileChooser.getSelectedFile());
+//        for(File f: fileChooser.getSelectedFile().listFiles()){
+//            if(f.getName().contains("answer-")){
+//                f.delete();
+//            }
+//        }
+        loadAnswers(fileChooser.getSelectedFile());
         
         
     }//GEN-LAST:event_jButton4MouseClicked
@@ -661,14 +677,33 @@ public class GPM_DemoView extends FrameView {
                 for(GraphNode gn:query.getGraphData()){
                     if(answer.getPairs(j).getQid() == gn.getId()){
                         
-                        queryNodeName = gn.getName();
+                        queryNodeName = new Integer(gn.getId()).toString();
                     }
                 }
                 String match_name = "";
-                if(GPMControler.ID_NAME_MAP.get(answer.getPairs(j).getMatch()) == null){
-                    match_name = new Integer(answer.getPairs(j).getMatch()).toString();
-                }else{
-                    match_name = GPMControler.ID_NAME_MAP.get(answer.getPairs(j).getMatch());
+                int realid =answer.getPairs(j).getMatch();
+                if(!jFilmCheckBox.isSelected()){
+                    if(answer.getPairs(j).getMatch() != answer.getPairs(j).getQid())
+                        realid = realid/83;
+                }
+                
+                HashMap<Integer, String> id_name_map = GPMControler.ID_NAME_MAP;
+                if(jFilmCheckBox.isSelected()){
+                    id_name_map = FreebaseConverter.ID_NAME_MAP;
+                }
+                if(match_name.equals("")){ 
+                    if(id_name_map.get(realid) == null){
+                        match_name = new Integer(realid).toString();
+                    }else{
+                        if(jFilmCheckBox.isSelected()){
+                            String mid = FreebaseConverter.GetMid(realid);
+                            match_name = FreebaseConverter.GetName(mid);
+                            GPMControler.ID_NAME_MAP.put(realid, match_name);
+                        }else{
+                            match_name = id_name_map.get(realid);
+                        }
+                    }
+                    
                 }
                 matchingTable.setValueAt(queryNodeName, j, 0);
                 matchingTable.setValueAt(match_name, j, 1);
@@ -720,7 +755,11 @@ public class GPM_DemoView extends FrameView {
         fileChooser.showOpenDialog(this.jButton5);
         indexTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         indexStateLabel.setText("Loading Index");
-        GPMControler.loadIndex(fileChooser.getSelectedFile().getAbsolutePath());
+        if(jFilmCheckBox.isSelected()){
+            FreebaseConverter.loadIndex(fileChooser.getSelectedFile().getAbsolutePath());
+        }else{
+            GPMControler.loadIndex(fileChooser.getSelectedFile().getAbsolutePath());
+        }
         indexStateLabel.setText("Finished Loading");
     }//GEN-LAST:event_jButton6MouseClicked
 
@@ -743,6 +782,8 @@ public class GPM_DemoView extends FrameView {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jFilmCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

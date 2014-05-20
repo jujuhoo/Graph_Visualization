@@ -5,6 +5,7 @@
 package edu.umass.rio.gpm.control;
 
 import edu.umass.rio.gpm.data.Graph;
+import edu.umass.rio.gpm.data.GraphNode;
 import edu.umass.rio.gpm.data.proto.GpmCommon.AnswerCoding;
 import edu.umass.rio.gpm.data.proto.GpmCommon.EdgeScore;
 import edu.umass.rio.gpm.data.proto.GpmCommon.MatchingPair;
@@ -102,7 +103,7 @@ public class GPMControler {
         answer.setMaxscore(0.99);
         answer.setScore(5.5);
         
-        return GPMControler.getAnswerGraphDot(answer.build());
+        return GPMControler.getAnswerGraphDot(answer.build(),null);
            
     } 
     
@@ -116,9 +117,12 @@ public class GPMControler {
                 String[] subStrings = str.split("\t");
                 String[] names = subStrings[1].split("/");
                 if (str.contains("authors")) {
-                    ID_NAME_MAP.put(new Integer(subStrings[0]), names[names.length - 1]);
-                    count++;
+                    ID_NAME_MAP.put(new Integer(subStrings[0]),names[names.length - 2]+"-"+names[names.length - 1]);
+                    
+                }else{
+                    ID_NAME_MAP.put(new Integer(subStrings[0]),  names[names.length - 2]+"-"+names[names.length - 1]);
                 }
+                count++;
                 //System.out.println(subStrings[0]+" "+names[names.length-1]);
                 if(count % 10000==0){
                     System.out.println("Loaded "+count+" items");
@@ -136,7 +140,7 @@ public class GPMControler {
             fw.write(dot_text, 0, dot_text.length());
             fw.flush();
             fw.close();
-            String cmd="circo -Tpng "+fileName+".gv -o "+fileName+".png"; 
+            String cmd="dot -Tpng "+fileName+".gv -o "+fileName+".png"; 
             Process ps = Runtime.getRuntime().exec(cmd);  
             ps.waitFor();
             imagePath = System.getProperty("user.dir")+"/"+fileName+".png";
@@ -144,9 +148,9 @@ public class GPMControler {
         }
         return imagePath;
     }
-   static public String getAnswerGraphDot(AnswerCoding answer){
+   static public String getAnswerGraphDot(AnswerCoding answer, Graph g){
         String imagePath = "";
-        String dot_script = GPMControler.getAnswerDotText(answer);
+        String dot_script = GPMControler.getAnswerDotText(answer,g);
         return getGraphDot("answer_graph", dot_script);
     }
    static public String getQueryGraphDot(Graph g){
@@ -154,7 +158,7 @@ public class GPMControler {
         String dot_script = GPMControler.getQueryGraphDotText(g);
         return getGraphDot("query_graph", dot_script);
     }
-   static private String getAnswerDotText(AnswerCoding answer){
+   static private String getAnswerDotText(AnswerCoding answer, Graph g){
         int dummy_id=0;
         DecimalFormat df = new DecimalFormat("#.####"); 
         double max_score= answer.getMaxscore();
@@ -164,7 +168,29 @@ public class GPMControler {
         sb.append("edge[fontsize=\"10px\"];"+ENDL);
         for(int i=0; i<answer.getEdgesCount(); i++){
             EdgeScore e = answer.getEdges(i);
-            double norm_score = e.getScore()/max_score;
+//            int src=0;
+//            int dest=0;
+//            for(int i1=0; i1<answer.getPairsCount(); i1++){
+//                if(e.getSrc()==answer.getPairs(i1).getMatch()){
+//                    src=answer.getPairs(i1).getQid();
+//                }
+//            }
+//            for(int i1=0; i1<answer.getPairsCount(); i1++){
+//                if(e.getDest()==answer.getPairs(i1).getMatch()){
+//                    dest=answer.getPairs(i1).getQid();
+//                }
+//            }
+//            boolean isEdge=false;
+//            for(int i1=0; i1 < g.getGraphData().size(); i1++){
+//                if(g.getGraphData().get(i1).getId() == src){
+//                    isEdge = g.getGraphData().get(i1).getNeighors().contains(dest);
+//                    break;
+//                }
+//            }
+//            if(!isEdge)
+//                continue;
+            
+            double norm_score = 1;//e.getScore()/max_score;
             StringBuilder ss_link_score = new StringBuilder();
             ss_link_score.append(" hop:"+e.getPathLen()+"\\l num:"+e.getPathNum()
                     +"\\l score:"+df.format(e.getScore()));
@@ -193,11 +219,18 @@ public class GPMControler {
         }
         for(int i=0; i<answer.getPairsCount(); i++){
             MatchingPair pair = answer.getPairs(i);
-            String name = ID_NAME_MAP.get(pair.getMatch());
+            int realid = pair.getMatch();
+            if(pair.getMatch() != pair.getQid())
+                    realid = realid/83;
+            String name = ID_NAME_MAP.get(realid);
             if(name == null)
                 name = new Integer(pair.getMatch()).toString();
-            sb.append(pair.getMatch()+"[label=\""+name +"\",fillcolor=\"/paired12/"
+
+            if(pair.getQid()<0)
+                            sb.append(pair.getMatch()+"[label=\""+name +"\",fillcolor=\"/paired12/"
                     +(-1*pair.getQid())+"\",style=\"filled\"]"+ENDL);
+            else
+                            sb.append(pair.getMatch()+"[label=\""+name +"\"]"+ENDL);
 	}
 	for(int i=0; i<dummy_id;i++){
             sb.append("d"+i+"[label=\"\",width=.25, height=.25, fixedsize=true]"+ENDL);
@@ -214,19 +247,23 @@ public class GPMControler {
         sb.append("graph{"+ENDL);
         sb.append("edge[fontsize=\"10px\"];"+ENDL);
         for(int i=0; i < g.getGraphData().size(); i++){
-            sb.append(g.getGraphData().get(i).getType()+"--"+g.getGraphData().get(i).getType()+"A"+ENDL);
+            //sb.append("\""+g.getGraphData().get(i).getType()+"\"--"+"\"A"+g.getGraphData().get(i).getType()+"\""+ENDL);
             for(int j=i+1; j < g.getGraphData().size(); j++){
                 if(g.getGraphData().get(j).getNeighors().contains( g.getGraphData().get(i).getId())){
-                    sb.append(g.getGraphData().get(i).getType()+"--"+g.getGraphData().get(j).getType()+ENDL);
+                    sb.append("\""+g.getGraphData().get(i).getId()+"\"--\""+g.getGraphData().get(j).getId()+"\""+ENDL);
                 }
             }
         }
         
         for(int i=0; i < g.getGraphData().size(); i++){
-            sb.append(g.getGraphData().get(i).getType()+"A"+"[label=\""+ g.getGraphData().get(i).getName()+"\",labelloc=t, width=.25, height=.25, fixedsize=true]"+ENDL);
-            sb.append(g.getGraphData().get(i).getType()
-                    +"[label=\""+"?Author"+"\",fillcolor=\"/paired12/"
-                    +(-1*g.getGraphData().get(i).getId())+"\",style=\"filled\"]"+ENDL);        
+            //sb.append("\"A"+g.getGraphData().get(i).getType()+"\"[label=\""+ g.getGraphData().get(i).getName()+"\",labelloc=t, width=.25, height=.25, fixedsize=true]"+ENDL);
+            if(g.getGraphData().get(i).getId()<0)
+            sb.append("\""+g.getGraphData().get(i).getId()+"\""
+                    +"[label=\""+g.getGraphData().get(i).getName()+"\",fillcolor=\"/paired12/"
+                    +(-1*g.getGraphData().get(i).getId())+"\",style=\"filled\"]"+ENDL);
+            else
+                sb.append("\""+g.getGraphData().get(i).getId()+"\""
+                    +"[label=\""+g.getGraphData().get(i).getName()+"\"]"+ENDL);
         }
         sb.append("}");
         return sb.toString();
